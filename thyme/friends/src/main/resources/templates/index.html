@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <h1>My friends</h1>
+    <ul>
+        <li th:each="friend : ${friends}"
+        th:text="${friend.getName}">Test</li>
+    </ul>
+
+    <h2>Add new friend</h2>
+
+    <form action="/index" method="POST">
+        <label for="name">Name: </label>
+        <input type="text" id="name" name="name" />
+        <input type="submit" value="Add Friend">
+    </form>
+
+</body>
+</html>

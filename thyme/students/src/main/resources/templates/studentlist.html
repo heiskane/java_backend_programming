@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Student List</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>Firstname</th>
+        <th>Lastname</th>
+    </tr>
+    <tr th:each="student : ${students}">
+        <td th:text="${student.fname}">1</td>
+        <td th:text="${student.lname}"></td>
+    </tr>
+</table>
+</body>
+</html>
