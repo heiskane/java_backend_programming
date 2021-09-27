@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,6 +60,17 @@ public class BookController {
     public String deleteBook(@PathVariable("id") Long bookId, Model model) {
         bookRepository.deleteById(bookId);
         return "redirect:/booklist";
+    }
+
+    @GetMapping("/books")
+    public @ResponseBody List<Book> bookListREST() {
+        return (List<Book>) bookRepository.findAll();
+    }
+
+    @GetMapping("/books/{id}")
+    public @ResponseBody
+    Optional<Book> findBookREST(@PathVariable("id") Long BookId) {
+        return bookRepository.findById(BookId);
     }
 
 }
