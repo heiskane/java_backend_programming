@@ -1,12 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+    <link type="text/css" rel="stylesheet" th:href="@{css/style.css}" />
     <title>Books</title>
 </head>
 <body>
-    <h1>Books</h1>
+    <div class="topnav">
+        <a class="active" href="@{/}">Home</a>
+        <a style="float:right" th:href="@{/logout}">Logout</a>
+    </div>
+    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
     <table class="table table-striped">
         <tr>
             <th>Title</th>
@@ -15,7 +22,7 @@
             <th>Year</th>
             <th>ISBN</th>
             <th>Price</th>
-            <th></th>
+            <th sec:authorize="hasAuthority('ADMIN')"></th>
             <th></th>
         </tr>
         <tr th:each="book : ${books}">
@@ -25,7 +32,9 @@
             <td th:text="${book.year}"></td>
             <td th:text="${book.isbn}"></td>
             <td th:text="${book.price}"></td>
-            <td><a class="btn btn-danger" th:href="@{/delete/{id}(id=${book.id})}">Delete</a></td>
+            <td sec:authorize="hasAuthority('ADMIN')">
+                <a class="btn btn-danger" th:href="@{/delete/{id}(id=${book.id})}">Delete</a>
+            </td>
             <td><a class="btn btn-primary" th:href="@{/edit/{id}(id=${book.id})}">Edit</a></td>
         </tr>
     </table>

@@ -1,9 +1,6 @@
 package com.example.Bookstore;
 
-import com.example.Bookstore.domain.Book;
-import com.example.Bookstore.domain.BookRepository;
-import com.example.Bookstore.domain.Category;
-import com.example.Bookstore.domain.CategoryRepository;
+import com.example.Bookstore.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -21,9 +18,9 @@ public class BookstoreApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(BookRepository bookRepository, CategoryRepository categoryRepository) {
+	public CommandLineRunner demo(BookRepository bookRepository, CategoryRepository categoryRepository, UserRepository userRepository) {
 		return (args) -> {
-			log.info("Commanline runner test");
+			log.info("Commandline runner test");
 			categoryRepository.save(new Category("Thriller"));
 			categoryRepository.save(new Category("Crime"));
 
@@ -42,12 +39,27 @@ public class BookstoreApplication {
 					20F,
 					categoryRepository.findByName("Crime").get(0)));
 
+			userRepository.save(new User(
+					"admin",
+					"$2a$12$czcinxQSa0dThdy6wb5z9u1XR5OehmioM7DrK1jYAx5r9cPO.XCcG",
+					"ADMIN"
+			));
 
+			userRepository.save(new User(
+					"guest",
+					"$2a$12$WqqJAn6w.m5daC4bfoMQXenfzc2aWcNMgsklpLcVhBbvTqSXfFeY.",
+					"USER"
+			));
+
+			log.info("BOOKS");
 			for (Book book : bookRepository.findAll()) {
 				log.info(book.toString());
 			}
 
+			log.info("USERS");
+			for (User user : userRepository.findAll()) {
+				log.info(user.toString());
+			}
 		};
 	}
-
 }
